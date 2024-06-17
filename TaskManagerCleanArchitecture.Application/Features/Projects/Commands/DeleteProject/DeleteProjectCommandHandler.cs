@@ -22,7 +22,8 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.De
 
 		public async Task<bool> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
 		{
-			await _projectRepository.DeleteAsync(request.Id);
+			var project = await _projectRepository.GetByIdAsync(request.Id);
+			await _projectRepository.DeleteAsync(project);
 
 			return true;
 		}

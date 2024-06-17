@@ -11,10 +11,10 @@ namespace TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.
 {
     public class GetProjectTaskListQueryHandler : IRequestHandler<GetProjectTaskListQuery, List<ProjectTaskListViewModel>>
     {
-        private readonly ProjectTaskRepository _projectTaskRepository;
+        private readonly IProjectTaskRepository _projectTaskRepository;
         private readonly IMapper _mapper;
 
-        public GetProjectTaskListQueryHandler(ProjectTaskRepository projectTaskRepository, IMapper mapper)
+        public GetProjectTaskListQueryHandler(IProjectTaskRepository projectTaskRepository, IMapper mapper)
         {
             _projectTaskRepository = projectTaskRepository;
             _mapper = mapper;

@@ -7,7 +7,7 @@ using TaskManagerCleanArchitecture.Domain.Entities;
 
 namespace TaskManagerCleanArchitecture.Application.Contracts.Persistence
 {
-	public interface ProjectTaskRepository : IAsyncRepository<ProjectTask>
+	public interface IProjectTaskRepository : IAsyncRepository<ProjectTask>
 	{
 	}
 }

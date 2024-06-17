@@ -9,6 +9,6 @@ namespace TaskManagerCleanArchitecture.Application.Contracts.Persistence
 {
 	public interface IProjectRepository : IAsyncRepository<Project>
 	{
-		Task<Project> GetProjectWithTasks();
+		Task<Project> GetProjectWithTasks(Guid id);
 	}
 }

@@ -1,4 +1,6 @@
+using TaskManagerCleanArchitecture.Api.Middlewares;
 using TaskManagerCleanArchitecture.Application;
+using TaskManagerCleanArchitecture.Infrastructure;
 using TaskManagerCleanArchitecture.Persistence;
 
 namespace TaskManagerCleanArchitecture.Api
@@ -31,6 +33,8 @@ namespace TaskManagerCleanArchitecture.Api
 
 			app.UseAuthorization();
 
+			app.UseCustomExceptionHandler();
+
 			app.MapControllers();
 
 			app.Run();
@@ -40,8 +44,9 @@ namespace TaskManagerCleanArchitecture.Api
 		{
 			services.AddAuthorization();
 
-			services.AddPertinenceServices(configuration);
-			services.AddApplicationServices();
+			services.AddPertinenceServices(configuration)
+					.AddApplicationServices()
+					.AddInfrastructureServices();
 		}
 	}
 }

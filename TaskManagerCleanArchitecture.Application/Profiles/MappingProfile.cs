@@ -9,6 +9,8 @@ using TaskManagerCleanArchitecture.Application.Features.Projects.Queries.GetProj
 using TaskManagerCleanArchitecture.Application.Features.Projects.Queries.GetProjectWithTasks;
 using TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskDetail;
 using TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskList;
+using TaskManagerCleanArchitecture.Application.Features.Users.Commands.LoginUser;
+using TaskManagerCleanArchitecture.Application.Features.Users.Commands.RegisterUser;
 using TaskManagerCleanArchitecture.Domain.Entities;
 
 namespace TaskManagerCleanArchitecture.Application.Profiles
@@ -25,6 +27,13 @@ namespace TaskManagerCleanArchitecture.Application.Profiles
 			CreateMap<Project, ProjectWithTasksViewModel>();
 			CreateMap<Project, CreateProjectCommand>().ReverseMap();
 			CreateMap<Project, CreateProjectDto>().ReverseMap();
+
+			CreateMap<ApplicationUser, RegisterCommand>()
+				.ForMember(lc => lc.Password, opt => opt.Ignore()).ReverseMap();
+			CreateMap<RegisterCommand, ApplicationUser>()
+				.ForMember(u => u.Password, opt => opt.Ignore());
+			CreateMap<ApplicationUser, LoginCommand>().ForMember(lc => lc.Password, opt => opt.Ignore()).ReverseMap();
+			CreateMap<LoginCommand, ApplicationUser>().ForMember(u => u.Password, opt => opt.Ignore());
 		}
 	}
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using TaskManagerCleanArchitecture.Application.Features.Users.Commands.LoginUser;
+using TaskManagerCleanArchitecture.Application.Features.Users.Commands.RegisterUser;
 
 namespace TaskManagerCleanArchitecture.Api.Controllers
 {
@@ -6,16 +9,25 @@ namespace TaskManagerCleanArchitecture.Api.Controllers
 	[Route("api/auth")]
 	public class AuthController : ControllerBase
 	{
-		[HttpPost("register", Name = "Register Users")]
-		public async Task<ActionResult> Register()
+		private readonly IMediator _mediator;
+
+        public AuthController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpPost("register", Name = "RegisterUsers")]
+		public async Task<ActionResult> Register(RegisterCommand command)
 		{
-			return Ok();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("login")]
-		public async Task<ActionResult> Login()
+		public async Task<ActionResult> Login(LoginCommand command)
 		{
-			return Ok();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 	}
 }

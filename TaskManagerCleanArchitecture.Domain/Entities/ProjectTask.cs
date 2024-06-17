@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Domain.Enums;
-using TaskManagerCleanArchitecture.Identity.Models;
 
 namespace TaskManagerCleanArchitecture.Domain.Entities
 {

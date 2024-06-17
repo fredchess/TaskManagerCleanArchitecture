@@ -18,6 +18,8 @@ namespace TaskManagerCleanArchitecture.Application
 				config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 			});
 
+			
+
 			return services;
 		}
 	}
