@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskList
+namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskList
 {
     public class GetProjectTaskListQuery : IRequest<List<ProjectTaskListViewModel>>
     {

@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Application.Features.Projects.Commands.CreateProject;
 using TaskManagerCleanArchitecture.Application.Features.Projects.Queries.GetProjectList;
 using TaskManagerCleanArchitecture.Application.Features.Projects.Queries.GetProjectWithTasks;
-using TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskDetail;
-using TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskList;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskDetail;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskList;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.UpdateTask;
 using TaskManagerCleanArchitecture.Application.Features.Users.Commands.LoginUser;
 using TaskManagerCleanArchitecture.Application.Features.Users.Commands.RegisterUser;
 using TaskManagerCleanArchitecture.Domain.Entities;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.CreateTask;
 
 namespace TaskManagerCleanArchitecture.Application.Profiles
 {
@@ -28,12 +30,11 @@ namespace TaskManagerCleanArchitecture.Application.Profiles
 			CreateMap<Project, CreateProjectCommand>().ReverseMap();
 			CreateMap<Project, CreateProjectDto>().ReverseMap();
 
-			CreateMap<ApplicationUser, RegisterCommand>()
-				.ForMember(lc => lc.Password, opt => opt.Ignore()).ReverseMap();
-			CreateMap<RegisterCommand, ApplicationUser>()
-				.ForMember(u => u.Password, opt => opt.Ignore());
-			CreateMap<ApplicationUser, LoginCommand>().ForMember(lc => lc.Password, opt => opt.Ignore()).ReverseMap();
-			CreateMap<LoginCommand, ApplicationUser>().ForMember(u => u.Password, opt => opt.Ignore());
+			CreateMap<ApplicationUser, RegisterCommand>().ReverseMap();
+			CreateMap<ApplicationUser, LoginCommand>().ReverseMap();
+
+			CreateMap<ProjectTask, UpdateTaskCommand>().ReverseMap();
+			CreateMap<ProjectTask, CreateProjectTaskCommand>().ReverseMap();
 		}
 	}
 }

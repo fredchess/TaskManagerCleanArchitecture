@@ -1,31 +1,65 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.CreateTask;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.DeleteTask;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.UpdateTask;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskDetail;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskList;
 
 namespace TaskManagerCleanArchitecture.Api.Controllers
 {
-	public class ProjectTaskController : Controller
+	[ApiController]
+	[Route("api/tasks")]
+	public class ProjectTaskController : ControllerBase
 	{
-		[HttpGet]
-		public async Task<ActionResult> GetTasks()
+		private readonly IMediator _mediator;
+
+		public ProjectTaskController(IMediator mediator)
 		{
-			return Ok();
+			_mediator = mediator;
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<IList<ProjectTaskListViewModel>>> GetTasks()
+		{
+			var result = await _mediator.Send(new GetProjectTaskListQuery());
+
+			return Ok(result);
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult> GetTask(Guid id)
+		public async Task<ActionResult<ProjectTaskDetailViewModel>> GetTask(Guid id)
 		{
-			return Ok();
+			var result = await _mediator.Send(new GetProjectTaskDetailQuery { Id = id });
+
+			return Ok(result);
+		}
+
+		[HttpPost]
+		public async Task<ActionResult<Guid>> PostTask(CreateProjectTaskCommand command)
+		{
+			var result = await _mediator.Send(command);
+
+			return Ok(result);
 		}
 
 		[HttpPut("{id}")]
-		public async Task<ActionResult> PutTask(Guid id)
+		public async Task<ActionResult<Guid>> PutTask([FromRoute] Guid id, UpdateTaskCommand request)
 		{
-			return Ok();
+			request.Id = id;
+			var result = await _mediator.Send(request);
+
+			return Ok(result);
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<ActionResult> DeleteTask(Guid id)
+		public async Task<ActionResult> DeleteTask([FromRoute] Guid id)
 		{
-			return Ok();
+			var request = new DeleteTaskCommand() { Id = id };
+
+			var result = await _mediator.Send(request);
+
+			return Ok(result);
 		}
 	}
 }

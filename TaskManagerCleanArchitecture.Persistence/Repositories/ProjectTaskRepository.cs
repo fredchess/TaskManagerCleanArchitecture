@@ -1,4 +1,5 @@
 using TaskManagerCleanArchitecture.Application.Contracts.Persistence;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.UpdateTask;
 using TaskManagerCleanArchitecture.Domain.Entities;
 
 namespace TaskManagerCleanArchitecture.Persistence.Repositories
@@ -7,6 +8,7 @@ namespace TaskManagerCleanArchitecture.Persistence.Repositories
     {
         public ProjectTaskRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
+            
         }
-    }
+	}
 }

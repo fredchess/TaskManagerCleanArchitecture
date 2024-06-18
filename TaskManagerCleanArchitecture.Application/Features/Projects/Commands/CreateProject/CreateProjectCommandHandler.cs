@@ -8,11 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Application.Contracts.Persistence;
 using TaskManagerCleanArchitecture.Application.Exceptions;
+using TaskManagerCleanArchitecture.Application.Responses;
 using TaskManagerCleanArchitecture.Domain.Entities;
 
 namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.CreateProject
 {
-	public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, CreateProjectCommandResponse>
+	public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, BaseResponse<CreateProjectDto>>
 	{
 		private readonly IProjectRepository _projectRepository;
 		private readonly IMapper _mapper;
@@ -23,11 +24,11 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.Cr
 			_projectRepository = projectRepository;
 		}
 
-		public async Task<CreateProjectCommandResponse> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<CreateProjectDto>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
 		{
 			var validator = new CreateProjectValidator();
 			var validationResult = await validator.ValidateAsync(request);
-			var response = new CreateProjectCommandResponse();
+			var response = new BaseResponse<CreateProjectDto>();
 
 			if (validationResult.Errors.Count > 0)
 			{
@@ -44,7 +45,7 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.Cr
 				var project = await _projectRepository.CreateAsync(_mapper.Map<Project>(request));
 				var projectDto = _mapper.Map<CreateProjectDto>(project);
 
-				response.Project = projectDto;
+				response.Data = projectDto;
 			}
 
 			return response;

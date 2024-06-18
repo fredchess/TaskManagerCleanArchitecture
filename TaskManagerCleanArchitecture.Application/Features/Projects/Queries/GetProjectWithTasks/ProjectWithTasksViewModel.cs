@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskDetail;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskDetail;
 
 namespace TaskManagerCleanArchitecture.Application.Features.Projects.Queries.GetProjectWithTasks
 {

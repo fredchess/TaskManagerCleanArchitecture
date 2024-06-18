@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Application.Contracts.Persistence;
 
-namespace TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskDetail
+namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskDetail
 {
     public class GetProjectTaskDetailQueryHandler : IRequestHandler<GetProjectTaskDetailQuery, ProjectTaskDetailViewModel>
     {

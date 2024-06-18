@@ -7,11 +7,8 @@ using TaskManagerCleanArchitecture.Application.Responses;
 
 namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.CreateProject
 {
-	public class CreateProjectCommandResponse : BaseResponse
+	public class CreateProjectCommandResponse
 	{
 		public CreateProjectDto Project { get; set; } = default!;
-
-        public CreateProjectCommandResponse() : base()
-		{ }
 	}
 }

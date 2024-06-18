@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Domain.Enums;
 
-namespace TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskList
+namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskList
 {
     public class ProjectTaskListViewModel
     {

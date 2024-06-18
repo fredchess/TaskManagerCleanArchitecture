@@ -8,5 +8,6 @@ namespace TaskManagerCleanArchitecture.Application.Contracts.Persistence
         Task<bool> VerifyIsUnique(string email);
         Task<ApplicationUser> CreateUserAsync(ApplicationUser user);
         Task<bool> ValidateCredentials(LoginCommand user);
-    }
+        Task<ApplicationUser?> GetByEmail(string email);
+	}
 }

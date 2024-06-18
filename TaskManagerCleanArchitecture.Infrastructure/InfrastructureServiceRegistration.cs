@@ -10,6 +10,7 @@ namespace TaskManagerCleanArchitecture.Infrastructure
         {
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IJwtProvider, JwtProvider>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

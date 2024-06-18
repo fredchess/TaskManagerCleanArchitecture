@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace TaskManagerCleanArchitecture.Application.Responses
 {
-	public class BaseResponse
+	public class BaseResponse<T> where T : class
 	{
         public bool Success { get; set; }
         public string? Message { get; set; }
         public int StatusCode { get; set; } = 200;
+        public T Data { get; set; }
         public IList<string> ValidationErrors { get; set; } = [];
 
         public BaseResponse()

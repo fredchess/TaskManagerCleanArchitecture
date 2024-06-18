@@ -1,14 +1,15 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Domain.Enums;
 
-namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskDetail
+namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.UpdateTask
 {
-    public class ProjectTaskDetailViewModel
-    {
+	public class UpdateTaskCommand : IRequest<Guid>
+	{
         public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string? Description { get; set; }

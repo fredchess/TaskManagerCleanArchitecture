@@ -25,13 +25,18 @@ namespace TaskManagerCleanArchitecture.Persistence.Repositories
             return _user.Entity;
         }
 
-        public async Task<bool> ValidateCredentials(LoginCommand user)
+		public async Task<ApplicationUser?> GetByEmail(string email)
+		{
+            return await _dbContext.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+		}
+
+		public async Task<bool> ValidateCredentials(LoginCommand user)
         {
             var _user = await _dbContext.Users
                         .Where(u => u.Email == user.Email)
                         .FirstOrDefaultAsync();
 
-            return _user != null && _passwordHasher.VerifyPassword(_user.Password, user.Password);
+            return _user != null && _passwordHasher.VerifyPassword(_user, user.Password);
         }
 
         public async Task<bool> VerifyIsUnique(string email)

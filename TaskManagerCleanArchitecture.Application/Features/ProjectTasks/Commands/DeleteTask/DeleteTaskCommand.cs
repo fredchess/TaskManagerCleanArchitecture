@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Application.Responses;
 
-namespace TaskManagerCleanArchitecture.Application.Features.Projects.Queries.GetProjectWithTasks
+namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.DeleteTask
 {
-	public class GetProjectWithTasksQuery : IRequest<BaseResponse<ProjectWithTasksViewModel>>
+	public class DeleteTaskCommand : IRequest<BaseResponse<string>>
 	{
         public Guid Id { get; set; }
     }

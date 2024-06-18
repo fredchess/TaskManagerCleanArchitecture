@@ -34,7 +34,10 @@ namespace TaskManagerCleanArchitecture.Application.Features.Users.Commands.Regis
 
             var userDto = _mapper.Map<ApplicationUser>(request);
 
-            userDto.Password = _passwordHasher.HashPassword(request.Password);
+            _passwordHasher.HashPassword(request.Password, out byte[] salt, out byte[] hash);
+
+            userDto.PasswordHash = hash;
+            userDto.PasswordSalt = salt;
 
             var user = await _userRepository.CreateUserAsync(userDto);
 

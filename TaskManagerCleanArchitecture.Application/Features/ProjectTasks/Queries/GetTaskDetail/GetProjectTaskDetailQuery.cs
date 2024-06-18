@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManagerCleanArchitecture.Application.Features.ProjectTask.Queries.GetTaskDetail
+namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskDetail
 {
     public class GetProjectTaskDetailQuery : IRequest<ProjectTaskDetailViewModel>
     {

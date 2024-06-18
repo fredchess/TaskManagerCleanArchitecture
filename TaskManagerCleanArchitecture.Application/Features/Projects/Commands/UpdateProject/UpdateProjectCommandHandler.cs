@@ -23,7 +23,7 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.Up
 
 		public async Task<bool> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
 		{
-			await _projectRepository.UpdateAsync(_mapper.Map<Project>(request));
+			//await _projectRepository.UpdateAsync(_mapper.Map<Project>(request));
 
 			return true;
 		}

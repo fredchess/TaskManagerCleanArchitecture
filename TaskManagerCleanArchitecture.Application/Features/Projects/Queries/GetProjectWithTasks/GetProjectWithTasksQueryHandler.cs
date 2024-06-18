@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Application.Contracts.Persistence;
+using TaskManagerCleanArchitecture.Application.Responses;
 
 namespace TaskManagerCleanArchitecture.Application.Features.Projects.Queries.GetProjectWithTasks
 {
-	public class GetProjectWithTasksQueryHandler : IRequestHandler<GetProjectWithTasksQuery, ProjectWithTasksViewModel>
+	public class GetProjectWithTasksQueryHandler : IRequestHandler<GetProjectWithTasksQuery, BaseResponse<ProjectWithTasksViewModel>>
 	{
 		private readonly IProjectRepository _projectRepository;
 		private readonly IMapper _mapper;
@@ -20,11 +21,11 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Queries.Get
 			_projectRepository = projectRepository;
 		}
 
-		public async Task<ProjectWithTasksViewModel> Handle(GetProjectWithTasksQuery request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<ProjectWithTasksViewModel>> Handle(GetProjectWithTasksQuery request, CancellationToken cancellationToken)
 		{
 			var project = await _projectRepository.GetProjectWithTasks(request.Id);
 
-			return _mapper.Map<ProjectWithTasksViewModel>(project);
+			return new BaseResponse<ProjectWithTasksViewModel> { Data = _mapper.Map<ProjectWithTasksViewModel>(project) };
 		}
 	}
 }
