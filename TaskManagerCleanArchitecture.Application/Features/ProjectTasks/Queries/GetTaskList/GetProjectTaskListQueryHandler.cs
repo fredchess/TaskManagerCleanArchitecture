@@ -23,7 +23,7 @@ namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries
 
         public async Task<List<ProjectTaskListViewModel>> Handle(GetProjectTaskListQuery request, CancellationToken cancellationToken)
         {
-            var tasks = await _projectTaskRepository.GetAllAsync();
+            var tasks = await _projectTaskRepository.GetAllAsync(request);
 
             return _mapper.Map<List<ProjectTaskListViewModel>>(tasks);
         }

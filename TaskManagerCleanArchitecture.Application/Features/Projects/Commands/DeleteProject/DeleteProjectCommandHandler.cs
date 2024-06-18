@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Application.Contracts.Persistence;
+using TaskManagerCleanArchitecture.Application.Responses;
 
 namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.DeleteProject
 {
-	public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand, bool>
+	public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand, BaseResponse<string>>
 	{
 		private readonly IProjectRepository _projectRepository;
 		private readonly IMapper _mapper;
@@ -20,12 +21,12 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.De
 			_projectRepository = projectRepository;
 		}
 
-		public async Task<bool> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
 		{
 			var project = await _projectRepository.GetByIdAsync(request.Id);
 			await _projectRepository.DeleteAsync(project);
 
-			return true;
+			return new BaseResponse<string>{ Data = request.Id.ToString() };
 		}
 	}
 }

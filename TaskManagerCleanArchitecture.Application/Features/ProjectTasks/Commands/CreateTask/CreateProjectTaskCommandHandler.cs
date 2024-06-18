@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Application.Contracts.Infrastructure;
 using TaskManagerCleanArchitecture.Application.Contracts.Persistence;
 using TaskManagerCleanArchitecture.Application.Exceptions;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskDetail;
 using TaskManagerCleanArchitecture.Application.Responses;
 using TaskManagerCleanArchitecture.Domain.Entities;
 
 namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.CreateTask
 {
-	public class CreateProjectTaskCommandHandler : IRequestHandler<CreateProjectTaskCommand, BaseResponse<string>>
+	public class CreateProjectTaskCommandHandler : IRequestHandler<CreateProjectTaskCommand, BaseResponse<ProjectTaskDetailViewModel>>
 	{
 		private readonly IProjectTaskRepository _projectTaskRepository;
 		private readonly IProjectRepository _projectRepository;
@@ -28,7 +29,7 @@ namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Command
 			_userService = userService;
 		}
 
-		public async Task<BaseResponse<string>> Handle(CreateProjectTaskCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<ProjectTaskDetailViewModel>> Handle(CreateProjectTaskCommand request, CancellationToken cancellationToken)
 		{
 			var validator = new CreateProjectTaskValidator(_projectRepository);
 			var validatorResult = await validator.ValidateAsync(request);
@@ -41,7 +42,9 @@ namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Command
 
 			var task = await _projectTaskRepository.CreateAsync(dto);
 
-			return new BaseResponse<string>() { Data = task.Id.ToString() };
+			var vm = _mapper.Map<ProjectTaskDetailViewModel>(task);
+
+			return new BaseResponse<ProjectTaskDetailViewModel>() { Data = vm };
 		}
 	}
 }

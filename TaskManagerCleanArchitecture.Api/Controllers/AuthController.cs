@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using System.Security.Claims;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerCleanArchitecture.Application.Features.Users.Commands.LoginUser;
 using TaskManagerCleanArchitecture.Application.Features.Users.Commands.RegisterUser;
@@ -28,6 +30,19 @@ namespace TaskManagerCleanArchitecture.Api.Controllers
 		{
 			var result = await _mediator.Send(command);
 			return Ok(result);
+		}
+
+		[HttpGet("manage/info"), Authorize]
+		public ActionResult ManageInfo()
+		{
+			var email = User.FindFirst(ClaimTypes.NameIdentifier);
+			
+			if (email == null)
+				return Unauthorized();
+
+			return Ok(new {
+				Email = email.Value
+			});
 		}
 	}
 }

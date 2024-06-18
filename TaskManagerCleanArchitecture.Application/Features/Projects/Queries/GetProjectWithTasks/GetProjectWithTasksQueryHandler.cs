@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManagerCleanArchitecture.Application.Contracts.Persistence;
+using TaskManagerCleanArchitecture.Application.Exceptions;
+using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Queries.GetTaskList;
 using TaskManagerCleanArchitecture.Application.Responses;
 
 namespace TaskManagerCleanArchitecture.Application.Features.Projects.Queries.GetProjectWithTasks
 {
-	public class GetProjectWithTasksQueryHandler : IRequestHandler<GetProjectWithTasksQuery, BaseResponse<ProjectWithTasksViewModel>>
+	public class GetProjectWithTasksQueryHandler : IRequestHandler<GetProjectWithTasksQuery, BaseResponse<PaginatedResponse<ProjectTaskListViewModel>>>
 	{
 		private readonly IProjectRepository _projectRepository;
 		private readonly IMapper _mapper;
@@ -21,11 +23,25 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Queries.Get
 			_projectRepository = projectRepository;
 		}
 
-		public async Task<BaseResponse<ProjectWithTasksViewModel>> Handle(GetProjectWithTasksQuery request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<PaginatedResponse<ProjectTaskListViewModel>>> Handle(GetProjectWithTasksQuery request, CancellationToken cancellationToken)
 		{
-			var project = await _projectRepository.GetProjectWithTasks(request.Id);
+			var project = await _projectRepository.GetProjectWithTasks(request);
 
-			return new BaseResponse<ProjectWithTasksViewModel> { Data = _mapper.Map<ProjectWithTasksViewModel>(project) };
+			if (project == null)
+			{
+				throw new NotFoundException("Project not found.");
+			}
+
+			var tasks = _mapper.Map<List<ProjectTaskListViewModel>>(project.ProjectTasks);
+
+			var data = new PaginatedResponse<ProjectTaskListViewModel> {
+				Datas = tasks,
+				Limit = request.Limit,
+				Page = request.Page,
+				TotalData = await _projectRepository.GetProjectTasksCountAsync(project.Id)
+			};
+
+			return new BaseResponse<PaginatedResponse<ProjectTaskListViewModel>> { Data = data };
 		}
 	}
 }

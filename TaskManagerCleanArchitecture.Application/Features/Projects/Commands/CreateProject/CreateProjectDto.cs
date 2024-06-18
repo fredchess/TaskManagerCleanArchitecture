@@ -9,5 +9,6 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Commands.Cr
 	public class CreateProjectDto
 	{
         public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
     }
 }

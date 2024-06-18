@@ -14,18 +14,26 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Queries.Get
     {
         private readonly IMapper _mapper;
         private readonly IProjectRepository _projectRepository;
+        private readonly IProjectTaskRepository _projectTaskRepository;
 
-        public GetProjectListQueryHandler(IProjectRepository projectRepository, IMapper mapper)
+        public GetProjectListQueryHandler(IProjectRepository projectRepository, IMapper mapper, IProjectTaskRepository projectTaskRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
+            _projectTaskRepository = projectTaskRepository;
         }
 
         public async Task<BaseResponse<List<ProjectListViewModel>>> Handle(GetProjectListQuery request, CancellationToken cancellationToken)
         {
             var projects = await _projectRepository.GetAllAsync();
 
-            return new BaseResponse<List<ProjectListViewModel>> { Data = _mapper.Map<List<ProjectListViewModel>>(projects) };
+            var vm = projects.Select(p => {
+                var model = _mapper.Map<ProjectListViewModel>(p);
+                model.TotalTasks = _projectRepository.GetProjectTasksCountAsync(p.Id).Result;
+                return model;
+            }).ToList();
+
+            return new BaseResponse<List<ProjectListViewModel>> { Data = vm };
         }
     }
 }

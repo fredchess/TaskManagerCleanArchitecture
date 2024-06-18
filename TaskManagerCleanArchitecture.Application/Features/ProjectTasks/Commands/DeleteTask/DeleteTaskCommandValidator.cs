@@ -28,7 +28,7 @@ namespace TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Command
 			var connectedUser = await _userService.GetConnectedUser();
 			var taskToUpdate = await _projectTaskRepository.GetByIdAsync(command.Id);
 
-			return connectedUser.Id == taskToUpdate.Id;
+			return connectedUser.Id.Equals(taskToUpdate.UserId);
 		}
 	}
 }

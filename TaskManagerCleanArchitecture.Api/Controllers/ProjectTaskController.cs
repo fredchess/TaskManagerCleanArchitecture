@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.CreateTask;
 using TaskManagerCleanArchitecture.Application.Features.ProjectTasks.Commands.DeleteTask;
@@ -10,6 +11,7 @@ namespace TaskManagerCleanArchitecture.Api.Controllers
 {
 	[ApiController]
 	[Route("api/tasks")]
+	[Authorize]
 	public class ProjectTaskController : ControllerBase
 	{
 		private readonly IMediator _mediator;
@@ -20,9 +22,9 @@ namespace TaskManagerCleanArchitecture.Api.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<IList<ProjectTaskListViewModel>>> GetTasks()
+		public async Task<ActionResult<IList<ProjectTaskListViewModel>>> GetTasks([FromQuery] GetProjectTaskListQuery query)
 		{
-			var result = await _mediator.Send(new GetProjectTaskListQuery());
+			var result = await _mediator.Send(query);
 
 			return Ok(result);
 		}

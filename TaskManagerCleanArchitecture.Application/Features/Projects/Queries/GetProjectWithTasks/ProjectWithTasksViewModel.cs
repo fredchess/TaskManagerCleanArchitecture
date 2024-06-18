@@ -12,6 +12,6 @@ namespace TaskManagerCleanArchitecture.Application.Features.Projects.Queries.Get
         public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string? Description { get; set; }
-        public IList<ProjectTaskDetailViewModel> ProjectTasksViewModel { get; set; } = [];
+        public IList<ProjectTaskDetailViewModel> ProjectTasks { get; set; } = [];
     }
 }

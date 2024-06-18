@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TaskManagerCleanArchitecture.Application.Contracts.Infrastructure;
 using TaskManagerCleanArchitecture.Application.Contracts.Persistence;
 
 namespace TaskManagerCleanArchitecture.Persistence.Repositories
@@ -6,10 +7,12 @@ namespace TaskManagerCleanArchitecture.Persistence.Repositories
     public class BaseRepository<T> : IAsyncRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _dbContext;
+        protected readonly IUserService _userService;
 
-        public BaseRepository(ApplicationDbContext dbContext)
+        public BaseRepository(ApplicationDbContext dbContext, IUserService userService)
         {
             _dbContext = dbContext;
+            _userService = userService;
         }
 
         public async Task<T> CreateAsync(T entity)
